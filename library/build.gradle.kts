@@ -3,6 +3,49 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("maven-publish")
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+
+                groupId = "io.github.romanvht.byedpi"
+                artifactId = "library"
+                version = "1.0.0"
+
+                pom {
+                    name.set("ByeDPI Library")
+                    description.set("Android library for testing and running ByeDPI bypass strategies")
+                    url.set("https://github.com/mamalubitlal/ByeByeDPI")
+
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://opensource.org/licenses/MIT")
+                        }
+                    }
+
+                    scm {
+                        url.set("https://github.com/mamalubitlal/ByeByeDPI")
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/mamalubitlal/ByeByeDPI")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR") ?: project.findProperty("gpr.user") as? String ?: ""
+                    password = System.getenv("GITHUB_TOKEN") ?: project.findProperty("gpr.token") as? String ?: ""
+                }
+            }
+        }
+    }
 }
 
 android {
