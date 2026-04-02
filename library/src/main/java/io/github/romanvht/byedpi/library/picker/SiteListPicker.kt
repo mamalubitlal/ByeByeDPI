@@ -39,7 +39,7 @@ class SiteListPicker(
     private val customLists = mutableListOf<SiteList>()
     private val activeListIds = mutableSetOf<String>()
     
-    private val _availableLists = MutableStateFlow(getAllLists())
+    private val _availableLists = MutableStateFlow<List<SiteList>>(emptyList())
     val availableLists: StateFlow<List<SiteList>> = _availableLists.asStateFlow()
     
     init {
@@ -47,6 +47,7 @@ class SiteListPicker(
         library.getActiveSiteLists().forEach { list ->
             activeListIds.add(list.id)
         }
+        refreshAvailable()
     }
     
     /**

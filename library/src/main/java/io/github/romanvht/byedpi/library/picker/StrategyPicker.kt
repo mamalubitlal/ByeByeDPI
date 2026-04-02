@@ -38,12 +38,16 @@ class StrategyPicker(
     private val customStrategies = mutableListOf<Strategy>()
     private val selectedStrategies = mutableListOf<Strategy>()
     
-    private val _availableStrategies = MutableStateFlow(getAllStrategies())
+    private val _availableStrategies = MutableStateFlow<List<Strategy>>(emptyList())
     val availableStrategies: StateFlow<List<Strategy>> = _availableStrategies.asStateFlow()
-    
+
     private val _selectedStrategy = MutableStateFlow<Strategy?>(null)
     val selectedStrategy: StateFlow<Strategy?> = _selectedStrategy.asStateFlow()
-    
+
+    init {
+        refreshAvailable()
+    }
+
     /**
      * Get all available strategies (default + custom)
      */
