@@ -294,20 +294,6 @@ class ByeDpiLibrary(
     }
     
     /**
-     * Start the server using an external binary
-     * 
-     * @param binaryPath Path to the ByeDPI binary
-     * @param config Proxy configuration
-     * @return Result of the start operation
-     */
-    suspend fun startServerExternal(
-        binaryPath: String,
-        config: ProxyConfig = ProxyConfig.DEFAULT
-    ): ServerResult {
-        return server.startExternal(binaryPath, config)
-    }
-    
-    /**
      * Stop the ByeDPI proxy server
      * 
      * @return Result of the stop operation
@@ -331,13 +317,6 @@ class ByeDpiLibrary(
      */
     fun pingServer(): Boolean {
         return server.ping()
-    }
-    
-    /**
-     * Check if native library is available
-     */
-    fun isNativeLibraryAvailable(): Boolean {
-        return server.isNativeLibraryAvailable()
     }
     
     /**
