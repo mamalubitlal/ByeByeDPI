@@ -26,6 +26,11 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: recursive
+        fetch-depth: 0
+        
+    - name: Get version
+      id: version
+      run: echo "version=1.0.$(git rev-list --count HEAD)" >> $GITHUB_OUTPUT
         
     - name: Set up JDK 17
       uses: actions/setup-java@v4
@@ -72,27 +77,13 @@ jobs:
       if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: v${{ steps.version.outputs.version }}
+        name: ByeDPI Library v${{ steps.version.outputs.version }}
         files: library/build/outputs/aar/*.aar
         body: |
-          ## ByeDPI Library
+          ## ByeDPI Library v${{ steps.version.outputs.version }}
           
           ### Maven (GitHub Packages)
-          ```kotlin
-          implementation("io.github.romanvht.byedpi:library:1.0.${{ github.run_number }}")
-          ```
-          See README for full setup instructions.
-        
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: v1.0.${{ github.run_number }}
-        name: ByeDPI Library v1.0.${{ github.run_number }}
-        files: |
-          library/build/outputs/aar/*.aar
-        body: |
-          ## ByeDPI Library v1.0.${{ github.run_number }}
-          
-          ### Installation (GitHub Packages)
           ```kotlin
           // settings.gradle.kts
           dependencyResolutionManagement {
@@ -109,7 +100,7 @@ jobs:
           
           // build.gradle.kts
           dependencies {
-              implementation("io.github.romanvht.byedpi:library:1.0.${{ github.run_number }}")
+              implementation("io.github.romanvht.byedpi:library:${{ steps.version.outputs.version }}")
           }
           ```
           

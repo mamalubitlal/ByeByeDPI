@@ -6,6 +6,66 @@ plugins {
     id("maven-publish")
 }
 
+// Auto-increment version based on git commit count
+fun getGitCommitCount(): Int {
+    return try {
+        val process = ProcessBuilder("git", "rev-list", "--count", "HEAD")
+            .redirectErrorStream(true)
+            .start()
+        process.waitFor()
+        process.inputStream.bufferedReader().readText().trim().toInt()
+    } catch (e: Exception) {
+        1
+    }
+}
+
+val libraryVersion = "1.0.${getGitCommitCount()}"
+
+android {
+    namespace = "io.github.romanvht.byedpi.library"
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 21
+        versionCode = getGitCommitCount()
+        versionName = libraryVersion
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+        }
+        debug {
+            isMinifyEnabled = false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+        }
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+}
+
 afterEvaluate {
     publishing {
         publications {
@@ -14,7 +74,7 @@ afterEvaluate {
 
                 groupId = "io.github.romanvht.byedpi"
                 artifactId = "library"
-                version = "1.0.0"
+                version = libraryVersion
 
                 pom {
                     name.set("ByeDPI Library")
