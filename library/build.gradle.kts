@@ -27,8 +27,6 @@ android {
 
     defaultConfig {
         minSdk = 21
-        versionCode = getGitCommitCount()
-        versionName = libraryVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -104,43 +102,6 @@ afterEvaluate {
                     password = System.getenv("GITHUB_TOKEN") ?: project.findProperty("gpr.token") as? String ?: ""
                 }
             }
-        }
-    }
-}
-
-android {
-    namespace = "io.github.romanvht.byedpi.library"
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 21
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildFeatures {
-        buildConfig = true
-    }
-
-    buildTypes {
-        release {
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            isMinifyEnabled = true
-        }
-        debug {
-            isMinifyEnabled = false
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_1_8)
         }
     }
 }
