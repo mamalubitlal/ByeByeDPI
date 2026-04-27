@@ -38,7 +38,7 @@ class StrategyTest {
         )
         val reset = strategy.reset()
         
-        assertEquals("", reset.name)
+        assertEquals("Test", reset.name)
         assertEquals(0, reset.successCount)
         assertEquals(0, reset.totalRequests)
         assertFalse(reset.isCompleted)

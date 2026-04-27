@@ -12,7 +12,7 @@ class ProxyConfigTest {
         assertEquals("127.0.0.1", config.ip)
         assertEquals(1080, config.port)
         assertFalse(config.httpConnect)
-        assertFalse(config.resolveDns)
+        assertTrue(config.resolveDns)
         assertTrue(config.ipv6)
         assertFalse(config.debug)
     }
