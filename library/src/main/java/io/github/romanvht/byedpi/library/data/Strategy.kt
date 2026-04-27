@@ -21,7 +21,7 @@ data class Strategy(
      */
     fun reset(): Strategy = Strategy(
         command = command,
-        name = name,
+        name = "",
         description = description
     )
 }

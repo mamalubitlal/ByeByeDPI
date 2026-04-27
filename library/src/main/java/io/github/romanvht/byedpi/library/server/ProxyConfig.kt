@@ -27,7 +27,7 @@ data class ProxyConfig(
     /** Use custom command mode instead of UI settings */
     val useCustomCommand: Boolean = false,
     /** DNS resolver mode */
-    val resolveDns: Boolean = true,
+    val resolveDns: Boolean = false,
     /** IPv6 support */
     val ipv6: Boolean = true,
     /** Debug mode */
