@@ -8,6 +8,14 @@ on:
     workflows: ["Build Library", "Test Library"]
     types: [completed]
     branches: [master]
+  push:
+    branches: [ master ]
+    paths:
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - '.github/workflows/**'
 
 permissions:
   contents: write

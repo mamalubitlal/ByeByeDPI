@@ -5,10 +5,12 @@ on:
     branches: [ master ]
     paths:
       - 'library/**'
+      - '.github/workflows/**'
   pull_request:
     branches: [ master ]
     paths:
       - 'library/**'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:

@@ -6,11 +6,13 @@ on:
     paths:
       - 'library/**'
       - 'app/src/main/cpp/**'
+      - '.github/workflows/**'
   pull_request:
     branches: [ main, master ]
     paths:
       - 'library/**'
       - 'app/src/main/cpp/**'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:
