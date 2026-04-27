@@ -159,13 +159,15 @@ class ByeDpiServer {
      * Check if the server is responsive
      */
     fun ping(): Boolean {
+        val host = _config.value?.ip
+        val port = _config.value?.port
+        if (host.isNullOrEmpty() || port == null || port <= 0) {
+            return false
+        }
         return try {
             val socket = java.net.Socket()
             socket.connect(
-                java.net.InetSocketAddress(
-                    _config.value?.ip ?: "127.0.0.1",
-                    _config.value?.port ?: 1080
-                ),
+                java.net.InetSocketAddress(host, port),
                 1000
             )
             socket.close()

@@ -27,9 +27,9 @@ import kotlinx.coroutines.flow.StateFlow
  * // Or find the best strategy first
  * val results = library.testWithDefaults()
  * val best = library.getBestStrategy(results)
- * 
- * // Start with the best strategy
- * library.startServer(ProxyConfig.fromCommand(best!!.command))
+ * if (best != null) {
+ *     library.startServer(ProxyConfig.fromCommand(best.command))
+ * }
  * 
  * // Stop when done
  * library.stopServer()

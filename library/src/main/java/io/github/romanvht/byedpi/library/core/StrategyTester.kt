@@ -65,7 +65,8 @@ class StrategyTester(
                 onStrategyStart?.invoke(index, strategy)
                 
                 // Replace {sni} placeholder with actual SNI value
-                val command = strategy.command.replace("{sni}", config.sniValue)
+                val sniValue = config.sniValue ?: ""
+                val command = strategy.command.replace("{sni}", sniValue)
                 
                 // Reset strategy for this test
                 val testStrategy = strategy.copy(

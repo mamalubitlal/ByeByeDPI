@@ -138,9 +138,16 @@ class SiteChecker(
      * @return True if proxy is reachable
      */
     suspend fun testProxyConnection(timeout: Long = 5): Boolean = withContext(Dispatchers.IO) {
+        if (proxyHost.isEmpty() || proxyPort <= 0) {
+            return@withContext false
+        }
         try {
             val testUrl = URL("https://www.google.com")
-            val proxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress(proxyHost, proxyPort))
+val proxy = Proxy(Proxy.Type.SOCKS, InetSocketAddress(proxyHost, proxyPort))
+
+        if (proxyHost.isEmpty() || proxyPort <= 0) {
+            return 0
+        }
             val connection = testUrl.openConnection(proxy) as HttpURLConnection
             connection.connectTimeout = (timeout * 1000).toInt()
             connection.readTimeout = (timeout * 1000).toInt()
